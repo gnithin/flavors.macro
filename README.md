@@ -1,1 +1,1 @@
-Repo for building the import-flavor bable plugin.
+Repo for building the import-flavor babel plugin.
