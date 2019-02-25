@@ -7,5 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "babel-plugin-macros": "^2.5.0",
+    "babel-plugin-tester": "^6.0.0"
+  }
 }
