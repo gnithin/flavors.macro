@@ -43,10 +43,13 @@ function flavors({ references, state, babel }) {
             } else {
                 console.log("Processing - ", importVal);
             }
-            importVal = importVal.replace(/\.default/, "." + THEME);
+            importVal = importVal.replace(/\.default/, `.${THEME}`);
+            console.log("New val - ", importVal);
 
             // Check if ending with `default.js`
             entry.source.value = importVal;
+            entry.source.extra.rawValue = importVal;
+            entry.source.extra.raw = `'${importVal}'`;
         }
 
         // TODO: Remove the macro expression
