@@ -1,19 +1,21 @@
 {
-  "name": "flavors",
-  "version": "0.1.0",
-  "description": "Repo for building the flavors babel plugin.",
-  "main": "src/index.js",
-  "scripts": {
-    "test": "jest"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-jest": "^24.1.0",
-    "babel-plugin-macros": "^2.5.0",
-    "babel-plugin-tester": "^6.0.0",
-    "babel-preset-env": "^1.7.0",
-    "jest": "^24.1.0"
-  }
+    "name": "flavors.macro",
+    "version": "0.1.0",
+    "description": "Repo for building the flavors babel plugin.",
+    "main": "macro.js",
+    "scripts": {
+        "test": "jest"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "babel-core": "^6.26.3",
+        "babel-jest": "^24.1.0",
+        "babel-plugin-macros": "^2.5.0",
+        "babel-plugin-tester": "^6.0.0",
+        "jest": "^24.1.0"
+    },
+    "dependencies": {
+        "@babel/preset-env": "^7.3.4"
+    }
 }

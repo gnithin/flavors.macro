@@ -8,8 +8,11 @@ pluginTester({
     babelOptions: { filename: __filename },
     tests: [
         `
-      import flavors from './flavors'
-      flavors();
-    `,
+        import flavors from './macro.js'
+        import a from './asdasd'
+        import b from './asdasd.default'
+
+        flavors();
+        `,
     ],
 })
