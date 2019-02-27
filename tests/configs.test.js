@@ -15,8 +15,8 @@ const EXPECTED_MODIFIED_KEY = "expected_modified"
 it('Empty config test', () => {
     var ipList = [
         {
-            [IP_KEY]: "abc.default.js",
-            [EXPECTED_KEY]: "abc.green.js",
+            [IP_KEY]: "abc.defaultFlavor.js",
+            [EXPECTED_KEY]: "abc.js",
             [EXPECTED_MODIFIED_KEY]: true,
         },
         {
