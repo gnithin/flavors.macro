@@ -1,4 +1,5 @@
 import Constants from './constants'
+import Utils from './utils';
 
 export default class Processor {
     /**
@@ -15,28 +16,60 @@ export default class Processor {
             importVal: importVal,
         }
 
-        var defaultKey = Constants.DEFAULT_FLAVOR_KEY;
-        // TODO: Escape the regex 
-        var isDefaultRegex = new RegExp(`^.+\\.${defaultKey}(\\.js)?$`)
-        if (false === isDefaultRegex.test(importVal)) {
-            console.log("Skipping ", importVal);
+        // Fetch the flavor-map
+        var flavorMap = null;
+        if (false === Utils.isEmptyObj(config)) {
+            flavorMap = config[Constants.CONFIG_FLAVOR_MAP_KEY]
+        }
+
+        // TODO: The below needs to be configurable
+        // Only if the flavor-map is empty is when the default flavors are applied
+        if (Utils.isNull(flavorMap)) {
+            flavorMap = {
+                [Constants.DEFAULT_FLAVOR_KEY]: Constants.DEFAULT_FLAVOR_THEME,
+            }
+        }
+
+        var isMatched = false;
+        var replacementVal = null;
+        var matchedKey = null;
+        for (var flavorKey in flavorMap) {
+            if (false === flavorMap.hasOwnProperty(flavorKey)) {
+                continue
+            }
+
+            var isDefaultRegex = new RegExp(`^.+\\.${Utils.escapeRegExp(flavorKey)}(\\.js)?$`)
+            if (true === isDefaultRegex.test(importVal)) {
+                isMatched = true;
+                matchedKey = flavorKey
+                replacementVal = flavorMap[matchedKey]
+                break;
+            }
+        }
+
+        // Return if no entry matches
+        if (false === isMatched || Utils.isNull(replacementVal)) {
             return resp;
         }
 
-        var replacementVal = Constants.DEFAULT_FLAVOR_THEME;
+        /*
+            NOTE: If replacement is an empty string, then don't add the additional period.
+            For example -
+            <replacement-val> => <replaced-string>
+            "green" => abc.green.js
+            "" => abc.js
+        */
         if (replacementVal !== "") {
             replacementVal = `.${replacementVal}`
         }
-        console.log("Processing - ", importVal);
-
-        // TODO: Escape the regex 
-        var defaultReplaceRegex = new RegExp(`\\.${defaultKey}\\b`)
+        var defaultReplaceRegex = new RegExp(`\\.${Utils.escapeRegExp(matchedKey)}\\b`)
         importVal = importVal.replace(defaultReplaceRegex, `${replacementVal}`);
 
-        console.log("Processed - ", importVal);
 
+        // Setting up the final response
         resp.isModified = true;
         resp.importVal = importVal;
+
         return resp;
     }
 }

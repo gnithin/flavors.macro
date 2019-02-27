@@ -3,6 +3,7 @@ const CONSTANTS = {
     DEFAULT_FLAVOR_THEME: "",
     EXPRESSION_TRAVERSE_LIMIT: 20,
     CONFIG_NAME: "flavorsConfig",
+    CONFIG_FLAVOR_MAP_KEY: "flavorMap",
 }
 
 export default CONSTANTS
