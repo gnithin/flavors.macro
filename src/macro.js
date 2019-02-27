@@ -8,9 +8,6 @@ function flavors({ references, state, babel, config }) {
     const { default: defaultImport = [] } = references;
 
     defaultImport.forEach(referencePath => {
-        // TODO: Remove this
-        console.log("DEBUG: Got config - ", config)
-
         if (Utils.isNull(referencePath)) {
             throw new MacroError("The reference path for the macro is empty!")
         }

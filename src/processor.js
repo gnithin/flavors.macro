@@ -2,11 +2,12 @@ import Constants from './constants'
 
 export default class Processor {
     /**
-     * 
+     * Modify the input string val to the appropriate flavor.
+     * If the input cannot be modified, then it would not contain the keyword required for replacement.
+     * The return value dictates when it is modified.
      * @param {string} importVal 
      * @param {object|null} config 
      * @returns {object} {isModified: <bool>, importVal: <string>}
-     * 
      */
     static modifyImportStatement(importVal, config) {
         var resp = {
