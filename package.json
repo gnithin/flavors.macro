@@ -1,7 +1,7 @@
 {
     "name": "flavors.macro",
-    "version": "0.2.0",
-    "description": "Macro for building different flavors of an app by manipulating import headers in React",
+    "version": "0.2.1",
+    "description": "Macro for building different flavors of a react-app ",
     "keywords": [
         "babel-plugin-macros"
     ],

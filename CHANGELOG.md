@@ -1,5 +1,9 @@
 # CHANGE-LOG
 
+## 0.2.1
+- Update readme
+- Update description key in package.json
+
 ## 0.2.0
 - Add all extensions support
 - Update readme
