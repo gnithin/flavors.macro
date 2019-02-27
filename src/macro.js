@@ -2,6 +2,7 @@ import Constants from './constants'
 import Utils from './utils'
 
 import { createMacro, MacroError } from 'babel-plugin-macros'
+import Processor from './processor'
 
 function flavors({ references, state, babel, config }) {
     const { default: defaultImport = [] } = references;
@@ -60,7 +61,7 @@ function flavors({ references, state, babel, config }) {
             var importVal = entry.source.value;
 
             // Fetch from config
-            var { isModified, importVal } = modifyImportStatement(importVal, config)
+            var { isModified, importVal } = Processor.modifyImportStatement(importVal, config)
             if (false === isModified) {
                 continue
             }
@@ -74,34 +75,6 @@ function flavors({ references, state, babel, config }) {
         // Remove the macro expression
         expPath.remove();
     })
-}
-
-function modifyImportStatement(importVal, config) {
-    var resp = {
-        isModified: false,
-        importVal: importVal,
-    }
-
-    var defaultKey = Constants.DEFAULT_FLAVOR_KEY;
-    // TODO: Escape the regex 
-    var isDefaultRegex = new RegExp(`^.+\\.${defaultKey}(\\.js)?$`)
-    if (false === isDefaultRegex.test(importVal)) {
-        console.log("Skipping ", importVal);
-        return resp;
-    }
-
-    var replacementVal = Constants.DEFAULT_FLAVOR_VAL;
-    console.log("Processing - ", importVal);
-
-    // TODO: Escape the regex 
-    var defaultReplaceRegex = new RegExp(`\\.${defaultKey}\\b`)
-    importVal = importVal.replace(defaultReplaceRegex, `.${replacementVal}`);
-
-    console.log("Processed - ", importVal);
-
-    resp.isModified = true;
-    resp.importVal = importVal;
-    return resp;
 }
 
 export default createMacro(
