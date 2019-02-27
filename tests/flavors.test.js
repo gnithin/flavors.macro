@@ -11,26 +11,26 @@ pluginTester({
             code: `
                 import flavors from '../src/macro.js'
                 import a from './filename'
-                import b from './filename-flavor.default'
+                import b from './filename-flavor.defaultFlavor'
 
                 flavors();
             `,
             output: `
                 import a from './filename';
-                import b from './filename-flavor.green';
+                import b from './filename-flavor';
             `
         },
         {
             code: `
             import flavors from '../src/macro.js'
             import React, { Component } from 'react';
-            import Hello from './hello.default.js'
+            import Hello from './hello.defaultFlavor.js'
 
             flavors()
             `,
             output: `
             import React, { Component } from 'react';
-            import Hello from './hello.green.js';
+            import Hello from './hello.js';
             `
         }
     ],

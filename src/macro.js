@@ -2,14 +2,12 @@ import Constants from './constants'
 import Utils from './utils'
 
 import { createMacro, MacroError } from 'babel-plugin-macros'
+import Processor from './processor'
 
 function flavors({ references, state, babel, config }) {
     const { default: defaultImport = [] } = references;
 
     defaultImport.forEach(referencePath => {
-        // TODO: Remove this
-        console.log("DEBUG: Got config - ", config)
-
         if (Utils.isNull(referencePath)) {
             throw new MacroError("The reference path for the macro is empty!")
         }
@@ -59,22 +57,11 @@ function flavors({ references, state, babel, config }) {
             // Modify import value
             var importVal = entry.source.value;
 
-            // TODO: Fetch from config
-            var defaultKey = Constants.DEFAULT_KEY
-            var replacementVal = Constants.THEME;
-
-            var isDefaultRegex = new RegExp(`^.+\\.${defaultKey}(\\.js)?$`)
-            if (false === isDefaultRegex.test(importVal)) {
-                console.log("Skipping ", importVal);
-                continue;
+            // Fetch from config
+            var { isModified, importVal } = Processor.modifyImportStatement(importVal, config)
+            if (false === isModified) {
+                continue
             }
-
-            console.log("Processing - ", importVal);
-
-            var defaultReplaceRegex = new RegExp(`\\.${defaultKey}\\b`)
-            importVal = importVal.replace(defaultReplaceRegex, `.${replacementVal}`);
-
-            console.log("New val - ", importVal);
 
             // Add the updated import-value
             entry.source.value = importVal;
