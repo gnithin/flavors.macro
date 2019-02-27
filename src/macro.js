@@ -1,14 +1,14 @@
 import Constants from './constants'
 import Utils from './utils'
 
-import { createMacro } from 'babel-plugin-macros'
+import { createMacro, MacroError } from 'babel-plugin-macros'
 
 function flavors({ references, state, babel }) {
     const { default: defaultImport = [] } = references;
 
     defaultImport.forEach(referencePath => {
         if (Utils.isNull(referencePath)) {
-            throw new Error("The reference path for the macro is empty!")
+            throw new MacroError("The reference path for the macro is empty!")
         }
 
         // Traverse through sibling and filter out the import-declarations
@@ -22,12 +22,12 @@ function flavors({ references, state, babel }) {
         }
 
         if (Utils.isEmptyStr(currPath)) {
-            throw new Error(
+            throw new MacroError(
                 `The macro should be used as an expressions statement! 
                 Eg - flavors()`
             );
         } else if (limit <= 0) {
-            throw new Error("The macro should be used at the global scope. Cannot be nested. Cannot find the ExpressionStatement!")
+            throw new MacroError("The macro should be used at the global scope. Cannot be nested. Cannot find the ExpressionStatement!")
         }
 
         var expPath = currPath;
@@ -37,10 +37,10 @@ function flavors({ references, state, babel }) {
         try {
             bodyList = expPath.parentPath.node.body;
         } catch (e) {
-            throw new Error("Error fetching the macro-expression statement's parent-node - ", e)
+            throw new MacroError("Error fetching the macro-expression statement's parent-node - ", e)
         } finally {
             if (Utils.isNull(bodyList)) {
-                throw new Error("The macro-expression statement's parent-node does not contain any body")
+                throw new MacroError("The macro-expression statement's parent-node does not contain any body")
             }
         }
 
