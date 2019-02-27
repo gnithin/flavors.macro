@@ -18,6 +18,11 @@ it('Empty config test', () => {
             [EXPECTED_MODIFIED_KEY]: false,
         },
         {
+            [IP_KEY]: "abc.defaultFlavor.css",
+            [EXPECTED_KEY]: "abc.css",
+            [EXPECTED_MODIFIED_KEY]: true,
+        },
+        {
             [IP_KEY]: "abc",
             [EXPECTED_KEY]: "abc",
             [EXPECTED_MODIFIED_KEY]: false,

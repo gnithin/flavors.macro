@@ -38,7 +38,7 @@ export default class Processor {
                 continue
             }
 
-            var isDefaultRegex = new RegExp(`^.+\\.${Utils.escapeRegExp(flavorKey)}(\\.js)?$`)
+            var isDefaultRegex = new RegExp(`^.+\\.${Utils.escapeRegExp(flavorKey)}(?:\\.[^.]+)?$`)
             if (true === isDefaultRegex.test(importVal)) {
                 isMatched = true;
                 matchedKey = flavorKey

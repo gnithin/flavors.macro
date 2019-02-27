@@ -1,7 +1,7 @@
 {
     "name": "flavors.macro",
-    "version": "0.1.0",
-    "description": "Macro for buiding different flavors of an app by manipulating import headers in React",
+    "version": "0.2.0",
+    "description": "Macro for building different flavors of an app by manipulating import headers in React",
     "keywords": [
         "babel-plugin-macros"
     ],
@@ -14,6 +14,10 @@
         "build": "node_modules/@babel/cli/bin/babel.js src -d lib"
     },
     "author": "Nithin Gangadharan <nithin.linkin@gmail.com> (https://github.com/gnithin)",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gnithin/flavors.macro"
+    },
     "license": "MIT",
     "devDependencies": {
         "@babel/cli": "^7.2.3",
