@@ -59,22 +59,11 @@ function flavors({ references, state, babel, config }) {
             // Modify import value
             var importVal = entry.source.value;
 
-            // TODO: Fetch from config
-            var defaultKey = Constants.DEFAULT_KEY
-            var replacementVal = Constants.THEME;
-
-            var isDefaultRegex = new RegExp(`^.+\\.${defaultKey}(\\.js)?$`)
-            if (false === isDefaultRegex.test(importVal)) {
-                console.log("Skipping ", importVal);
-                continue;
+            // Fetch from config
+            var { isModified, importVal } = modifyImportStatement(importVal, config)
+            if (false === isModified) {
+                continue
             }
-
-            console.log("Processing - ", importVal);
-
-            var defaultReplaceRegex = new RegExp(`\\.${defaultKey}\\b`)
-            importVal = importVal.replace(defaultReplaceRegex, `.${replacementVal}`);
-
-            console.log("New val - ", importVal);
 
             // Add the updated import-value
             entry.source.value = importVal;
@@ -85,6 +74,34 @@ function flavors({ references, state, babel, config }) {
         // Remove the macro expression
         expPath.remove();
     })
+}
+
+function modifyImportStatement(importVal, config) {
+    var resp = {
+        isModified: false,
+        importVal: importVal,
+    }
+
+    var defaultKey = Constants.DEFAULT_FLAVOR_KEY;
+    // TODO: Escape the regex 
+    var isDefaultRegex = new RegExp(`^.+\\.${defaultKey}(\\.js)?$`)
+    if (false === isDefaultRegex.test(importVal)) {
+        console.log("Skipping ", importVal);
+        return resp;
+    }
+
+    var replacementVal = Constants.DEFAULT_FLAVOR_VAL;
+    console.log("Processing - ", importVal);
+
+    // TODO: Escape the regex 
+    var defaultReplaceRegex = new RegExp(`\\.${defaultKey}\\b`)
+    importVal = importVal.replace(defaultReplaceRegex, `.${replacementVal}`);
+
+    console.log("Processed - ", importVal);
+
+    resp.isModified = true;
+    resp.importVal = importVal;
+    return resp;
 }
 
 export default createMacro(
