@@ -4,7 +4,7 @@
     "description": "Repo for building the flavors babel plugin.",
     "main": "lib/macro.js",
     "scripts": {
-        "test": "jest"
+        "test": "jest 'tests'"
     },
     "author": "",
     "license": "ISC",
