@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-// import Hello from './hello.js'
-
-import Hello from './hello.default'
+import Hello from './hello.layout-theme'
 import flavors from 'flavors.macro'
 flavors();
 
 class App extends Component {
     render() {
-        console.log("HEL - ", Hello)
         return (
             <div className="App">
                 <Hello />
