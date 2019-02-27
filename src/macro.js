@@ -53,6 +53,7 @@ function flavors({ references, state, babel }) {
                 continue;
             }
 
+            // Modify import value
             var importVal = entry.source.value;
             if (false === /^.+\.default(\.js)?$/.test(importVal)) {
                 console.log("Skipping ", importVal);
