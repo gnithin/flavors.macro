@@ -38,7 +38,7 @@ export default class Processor {
                 continue
             }
 
-            var isDefaultRegex = new RegExp(`^.+\\.${Utils.escapeRegExp(flavorKey)}(\\.js)?$`)
+            var isDefaultRegex = new RegExp(`^.+\\.${Utils.escapeRegExp(flavorKey)}(\\.(?:${this.getExtensionsStr()}))?$`)
             if (true === isDefaultRegex.test(importVal)) {
                 isMatched = true;
                 matchedKey = flavorKey
@@ -71,5 +71,14 @@ export default class Processor {
         resp.importVal = importVal;
 
         return resp;
+    }
+
+    static getExtensionsStr() {
+        var extList = Constants.DEFAULT_EXTENSIONS_LIST;
+        var escapedList = []
+        extList.forEach(ext => {
+            escapedList.push(Utils.escapeRegExp(ext))
+        });
+        return escapedList.join("|")
     }
 }
