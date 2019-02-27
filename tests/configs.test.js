@@ -94,6 +94,22 @@ it('Config test', () => {
             [CONFIG_KEY]: flavorConfig,
             [EXPECTED_MODIFIED_KEY]: false,
         },
+        // Check with empty config map
+        {
+            [IP_KEY]: "abc.defaultFlavor.js",
+            [EXPECTED_KEY]: "abc.js",
+            [CONFIG_KEY]: {},
+            [EXPECTED_MODIFIED_KEY]: true,
+        },
+        // Check with empty config map
+        {
+            [IP_KEY]: "abc.defaultFlavor.js",
+            [EXPECTED_KEY]: "abc.defaultFlavor.js",
+            [CONFIG_KEY]: {
+                "flavorsMap": {}
+            },
+            [EXPECTED_MODIFIED_KEY]: false,
+        },
     ]
 
     ipList.forEach(entry => {
