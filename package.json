@@ -3,6 +3,9 @@
     "version": "0.1.0",
     "description": "Repo for building the flavors babel plugin.",
     "main": "lib/macro.js",
+    "files": [
+        "lib"
+    ],
     "scripts": {
         "test": "jest 'tests'",
         "build": "node_modules/@babel/cli/bin/babel.js src -d lib"
