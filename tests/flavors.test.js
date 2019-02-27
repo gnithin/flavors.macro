@@ -9,7 +9,7 @@ pluginTester({
     tests: [
         {
             code: `
-                import flavors from './macro.js'
+                import flavors from '../src/macro.js'
                 import a from './asdasd'
                 import b from './asdasd.default'
 
@@ -18,6 +18,19 @@ pluginTester({
             output: `
                 import a from './asdasd';
                 import b from './asdasd.green';
+            `
+        },
+        {
+            code: `
+            import flavors from '../src/macro.js'
+            import React, { Component } from 'react';
+            import Hello from './hello.default.js'
+
+            flavors()
+            `,
+            output: `
+            import React, { Component } from 'react';
+            import Hello from './hello.green.js';
             `
         }
     ],
