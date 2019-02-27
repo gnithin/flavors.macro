@@ -4,10 +4,6 @@ const CONSTANTS = {
     EXPRESSION_TRAVERSE_LIMIT: 20,
     CONFIG_NAME: "flavorsConfig",
     CONFIG_FLAVOR_MAP_KEY: "flavorsMap",
-    DEFAULT_EXTENSIONS_LIST: [
-        "js",
-        "css",
-    ]
 }
 
 export default CONSTANTS
