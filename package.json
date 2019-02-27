@@ -2,7 +2,7 @@
     "name": "flavors.macro",
     "version": "0.1.0",
     "description": "Repo for building the flavors babel plugin.",
-    "main": "src/macro.js",
+    "main": "lib/macro.js",
     "scripts": {
         "test": "jest"
     },
