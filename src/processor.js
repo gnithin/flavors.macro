@@ -22,8 +22,8 @@ export default class Processor {
             flavorMap = config[Constants.CONFIG_FLAVOR_MAP_KEY]
         }
 
-        // TODO: The below needs to be configurable
         // Only if the flavor-map is empty is when the default flavors are applied
+        // NOTE: If default needs to be avoided, then set flavorsMap: {}
         if (Utils.isNull(flavorMap)) {
             flavorMap = {
                 [Constants.DEFAULT_FLAVOR_KEY]: Constants.DEFAULT_FLAVOR_THEME,
