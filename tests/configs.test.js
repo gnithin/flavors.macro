@@ -42,7 +42,7 @@ it('Empty config test', () => {
 it('Config test', () => {
     const flavorConfig = {
         "flavorsMap": {
-            "stylesFlavor": "green",
+            "styleFlavor": "green",
             "layoutFlavor": "red",
         }
     }
