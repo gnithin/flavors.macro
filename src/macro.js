@@ -14,15 +14,20 @@ function flavors({ references, state, babel }) {
         // Traverse through sibling and filter out the import-declarations
         // Depending on the type of value, find the expression
         // Not sure if while is the best way to go about this
+        var limit = Constants.EXPRESSION_TRAVERSE_LIMIT;
         var currPath = referencePath;
-        while (currPath != null && currPath.type !== "ExpressionStatement") {
+        while (limit > 0 && currPath != null && currPath.type !== "ExpressionStatement") {
             currPath = currPath.parentPath;
+            limit -= 1;
         }
+
         if (Utils.isEmptyStr(currPath)) {
             throw new Error(
                 `The macro should be used as an expressions statement! 
-         Eg - macro(), __macro__`
+                Eg - flavors()`
             );
+        } else if (limit <= 0) {
+            throw new Error("The macro should be used at the global scope. Cannot be nested. Cannot find the ExpressionStatement!")
         }
 
         var expPath = currPath;
