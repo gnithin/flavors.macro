@@ -44,6 +44,7 @@ it('Config test', () => {
         "flavorsMap": {
             "styleFlavor": "green",
             "layoutFlavor": "red",
+            "flavor.with-spl#chars": "not-new-flavor",
         }
     }
 
@@ -59,6 +60,39 @@ it('Config test', () => {
             [EXPECTED_KEY]: "abc.red.js",
             [CONFIG_KEY]: flavorConfig,
             [EXPECTED_MODIFIED_KEY]: true,
+        },
+        {
+            [IP_KEY]: "abc.something-else.js",
+            [EXPECTED_KEY]: "abc.something-else.js",
+            [CONFIG_KEY]: flavorConfig,
+            [EXPECTED_MODIFIED_KEY]: false,
+        },
+        {
+            [IP_KEY]: "abc.flavor.with-spl#chars.js",
+            [EXPECTED_KEY]: "abc.not-new-flavor.js",
+            [CONFIG_KEY]: flavorConfig,
+            [EXPECTED_MODIFIED_KEY]: true,
+        },
+        // Check for without .js
+        {
+            [IP_KEY]: "abc.flavor.with-spl#chars",
+            [EXPECTED_KEY]: "abc.not-new-flavor",
+            [CONFIG_KEY]: flavorConfig,
+            [EXPECTED_MODIFIED_KEY]: true,
+        },
+        // Check for replacing flavor with only the boundary values
+        {
+            [IP_KEY]: "abc.flavor.with-spl#charstrailing.js",
+            [EXPECTED_KEY]: "abc.flavor.with-spl#charstrailing.js",
+            [CONFIG_KEY]: flavorConfig,
+            [EXPECTED_MODIFIED_KEY]: false,
+        },
+        // Check for replacing flavor with values other than periods
+        {
+            [IP_KEY]: "abc.flavor.with-spl#chars#trailing.js",
+            [EXPECTED_KEY]: "abc.flavor.with-spl#chars#trailing.js",
+            [CONFIG_KEY]: flavorConfig,
+            [EXPECTED_MODIFIED_KEY]: false,
         },
     ]
 
