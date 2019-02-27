@@ -1,0 +1,75 @@
+import Constants from './constants'
+import Utils from './utils';
+
+export default class Processor {
+    /**
+     * Modify the input string val to the appropriate flavor.
+     * If the input cannot be modified, then it would not contain the keyword required for replacement.
+     * The return value dictates when it is modified.
+     * @param {string} importVal 
+     * @param {object|null} config 
+     * @returns {object} {isModified: <bool>, importVal: <string>}
+     */
+    static modifyImportStatement(importVal, config) {
+        var resp = {
+            isModified: false,
+            importVal: importVal,
+        }
+
+        // Fetch the flavor-map
+        var flavorMap = null;
+        if (false === Utils.isEmptyObj(config)) {
+            flavorMap = config[Constants.CONFIG_FLAVOR_MAP_KEY]
+        }
+
+        // Only if the flavor-map is empty is when the default flavors are applied
+        // NOTE: If default needs to be avoided, then set flavorsMap: {}
+        if (Utils.isNull(flavorMap)) {
+            flavorMap = {
+                [Constants.DEFAULT_FLAVOR_KEY]: Constants.DEFAULT_FLAVOR_THEME,
+            }
+        }
+
+        var isMatched = false;
+        var replacementVal = null;
+        var matchedKey = null;
+        for (var flavorKey in flavorMap) {
+            if (false === flavorMap.hasOwnProperty(flavorKey)) {
+                continue
+            }
+
+            var isDefaultRegex = new RegExp(`^.+\\.${Utils.escapeRegExp(flavorKey)}(\\.js)?$`)
+            if (true === isDefaultRegex.test(importVal)) {
+                isMatched = true;
+                matchedKey = flavorKey
+                replacementVal = flavorMap[matchedKey]
+                break;
+            }
+        }
+
+        // Return if no entry matches
+        if (false === isMatched || Utils.isNull(replacementVal)) {
+            return resp;
+        }
+
+        /*
+            NOTE: If replacement is an empty string, then don't add the additional period.
+            For example -
+            <replacement-val> => <replaced-string>
+            "green" => abc.green.js
+            "" => abc.js
+        */
+        if (replacementVal !== "") {
+            replacementVal = `.${replacementVal}`
+        }
+        var defaultReplaceRegex = new RegExp(`\\.${Utils.escapeRegExp(matchedKey)}\\b`)
+        importVal = importVal.replace(defaultReplaceRegex, `${replacementVal}`);
+
+
+        // Setting up the final response
+        resp.isModified = true;
+        resp.importVal = importVal;
+
+        return resp;
+    }
+}

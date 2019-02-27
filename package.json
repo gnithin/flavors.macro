@@ -1,15 +1,29 @@
 {
-  "name": "import-flavor",
-  "version": "0.1.0",
-  "description": "Repo for building the import-flavor babel plugin.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "babel-plugin-macros": "^2.5.0",
-    "babel-plugin-tester": "^6.0.0"
-  }
+    "name": "flavors.macro",
+    "version": "0.1.0",
+    "description": "Macro for buiding different flavors of an app by manipulating import headers in React",
+    "keywords": [
+        "babel-plugin-macros"
+    ],
+    "main": "lib/macro.js",
+    "files": [
+        "lib"
+    ],
+    "scripts": {
+        "test": "jest 'tests'",
+        "build": "node_modules/@babel/cli/bin/babel.js src -d lib"
+    },
+    "author": "Nithin Gangadharan <nithin.linkin@gmail.com> (https://github.com/gnithin)",
+    "license": "MIT",
+    "devDependencies": {
+        "@babel/cli": "^7.2.3",
+        "babel-core": "^6.26.3",
+        "babel-jest": "^24.1.0",
+        "babel-plugin-macros": "^2.5.0",
+        "babel-plugin-tester": "^6.0.0",
+        "jest": "^24.1.0"
+    },
+    "dependencies": {
+        "@babel/preset-env": "^7.3.4"
+    }
 }
