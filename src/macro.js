@@ -3,10 +3,13 @@ import Utils from './utils'
 
 import { createMacro, MacroError } from 'babel-plugin-macros'
 
-function flavors({ references, state, babel }) {
+function flavors({ references, state, babel, config }) {
     const { default: defaultImport = [] } = references;
 
     defaultImport.forEach(referencePath => {
+        // TODO: Remove this
+        console.log("DEBUG: Got config - ", config)
+
         if (Utils.isNull(referencePath)) {
             throw new MacroError("The reference path for the macro is empty!")
         }
@@ -84,4 +87,7 @@ function flavors({ references, state, babel }) {
     })
 }
 
-export default createMacro(flavors)
+export default createMacro(
+    flavors,
+    { configName: Constants.CONFIG_NAME },
+)
