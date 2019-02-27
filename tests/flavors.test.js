@@ -10,14 +10,14 @@ pluginTester({
         {
             code: `
                 import flavors from '../src/macro.js'
-                import a from './asdasd'
-                import b from './asdasd.default'
+                import a from './filename'
+                import b from './filename-flavor.default'
 
                 flavors();
             `,
             output: `
-                import a from './asdasd';
-                import b from './asdasd.green';
+                import a from './filename';
+                import b from './filename-flavor.green';
             `
         },
         {
