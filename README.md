@@ -42,7 +42,7 @@ You can then use the flavor-key in any class by adding the macro-key as the last
 ```js
 import flavors from 'flavors.macro'
 import Hello from './hello.layout-theme.js'
-import Bye from './hello.layout-theme'
+import Bye from './bye.layout-theme'
 // ... other imports
 
 // Add this right after all the imports are declared
@@ -52,7 +52,7 @@ When the application is built, the above class will evaluate to -
 
 ```js
 import Hello from './hello.green.js'
-import Bye from './hello.green'
+import Bye from './bye.green'
 // ... other imports
 ```
 
