@@ -32,26 +32,38 @@ function flavors({ references, state, babel }) {
 
         var expPath = currPath;
         var currRefIndex = expPath.key;
-        var bodyList = expPath.parentPath.node.body;
 
-        // Iterate through every element in the body until
+        var bodyList = null;
+        try {
+            bodyList = expPath.parentPath.node.body;
+        } catch (e) {
+            throw new Error("Error fetching the macro-expression statement's parent-node - ", e)
+        } finally {
+            if (Utils.isNull(bodyList)) {
+                throw new Error("The macro-expression statement's parent-node does not contain any body")
+            }
+        }
+
+        // Iterate through every element from the top until the macro expression is reached
         for (var i = 0; i < currRefIndex; i++) {
             var entry = bodyList[i];
-            // skip the import declaration
+
+            // Skip the non-import declaration
             if (entry.type !== "ImportDeclaration") {
                 continue;
             }
+
             var importVal = entry.source.value;
             if (false === /^.+\.default(\.js)?$/.test(importVal)) {
                 console.log("Skipping ", importVal);
                 continue;
-            } else {
-                console.log("Processing - ", importVal);
             }
+
+            console.log("Processing - ", importVal);
             importVal = importVal.replace(/\.default/, `.${Constants.THEME}`);
             console.log("New val - ", importVal);
 
-            // Check if ending with `default.js`
+            // Add the updated import-value
             entry.source.value = importVal;
             entry.source.extra.rawValue = importVal;
             entry.source.extra.raw = `'${importVal}'`;
