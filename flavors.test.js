@@ -9,7 +9,7 @@ pluginTester({
     tests: [
         {
             code: `
-                import flavors from './macro.js'
+                import flavors from './src/macro.js'
                 import a from './asdasd'
                 import b from './asdasd.default'
 
