@@ -24,11 +24,14 @@ export default class Processor {
         }
 
         var replacementVal = Constants.DEFAULT_FLAVOR_THEME;
+        if (replacementVal !== "") {
+            replacementVal = `.${replacementVal}`
+        }
         console.log("Processing - ", importVal);
 
         // TODO: Escape the regex 
         var defaultReplaceRegex = new RegExp(`\\.${defaultKey}\\b`)
-        importVal = importVal.replace(defaultReplaceRegex, `.${replacementVal}`);
+        importVal = importVal.replace(defaultReplaceRegex, `${replacementVal}`);
 
         console.log("Processed - ", importVal);
 
