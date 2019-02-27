@@ -19,6 +19,19 @@ pluginTester({
                 import a from './asdasd';
                 import b from './asdasd.green';
             `
+        },
+        {
+            code: `
+            import flavors from '../src/macro.js'
+            import React, { Component } from 'react';
+            import Hello from './hello.default.js'
+
+            flavors()
+            `,
+            output: `
+            import React, { Component } from 'react';
+            import Hello from './hello.green.js';
+            `
         }
     ],
 })
