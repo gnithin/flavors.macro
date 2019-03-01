@@ -4,6 +4,10 @@ import Utils from './utils'
 import { createMacro, MacroError } from 'babel-plugin-macros'
 import Processor from './processor'
 
+/*
+The basic AST logic - 
+https://astexplorer.net/#/gist/3d66740ae62d8a324881d0ed3b47b803/529c309b805a3017e2103900155b05d9cb72c912
+*/
 function flavors({ references, state, babel, config }) {
     const { default: defaultImport = [] } = references;
 
