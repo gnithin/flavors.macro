@@ -17,19 +17,9 @@ export default class Processor {
         }
 
         // Fetch the flavor-map
-        var flavorMap = null;
-        if (false === Utils.isEmptyObj(config)) {
-            flavorMap = config[Constants.CONFIG_FLAVOR_MAP_KEY]
-        }
+        var flavorMap = Processor.getFlavorMapForConfig(config)
 
-        // Only if the flavor-map is empty is when the default flavors are applied
-        // NOTE: If default needs to be avoided, then set flavorsMap: {}
-        if (Utils.isNull(flavorMap)) {
-            flavorMap = {
-                [Constants.DEFAULT_FLAVOR_KEY]: Constants.DEFAULT_FLAVOR_THEME,
-            }
-        }
-
+        // Import statement logic
         var isMatched = false;
         var replacementVal = null;
         var matchedKey = null;
@@ -71,5 +61,51 @@ export default class Processor {
         resp.importVal = importVal;
 
         return resp;
+    }
+
+    /**
+     * Returns flavor for key. If key is invalid or not found, returns "" (empty-string)
+     * @param {string} key 
+     * @param {*} config 
+     * @returns {string}
+     */
+    static getFlavorForKey(key, config) {
+        var defaultFlavorVal = "";
+        if (Utils.isEmptyStr(key)) {
+            return defaultFlavorVal
+        }
+
+        var flavorMap = Processor.getFlavorMapForConfig(config)
+        if (Utils.isEmptyObj(flavorMap)) {
+            return defaultFlavorVal
+        }
+
+        var flavorVal = flavorMap[key]
+        if (Utils.isEmptyObj(flavorVal)) {
+            return defaultFlavorVal
+        }
+        return flavorVal
+    }
+
+    /**
+     * Creates a flavor map from the config. 
+     * If the config is empty, creates a flavor-map with default values.
+     * @param {object} config 
+     */
+    static getFlavorMapForConfig(config) {
+        // Fetch the flavor-map
+        var flavorMap = null;
+        if (false === Utils.isEmptyObj(config)) {
+            flavorMap = config[Constants.CONFIG_FLAVOR_MAP_KEY]
+        }
+
+        // Only if the flavor-map is empty is when the default flavors are applied
+        // NOTE: If default needs to be avoided, then set flavorsMap: {}
+        if (Utils.isNull(flavorMap)) {
+            flavorMap = {
+                [Constants.DEFAULT_FLAVOR_KEY]: Constants.DEFAULT_FLAVOR_THEME,
+            }
+        }
+        return flavorMap
     }
 }
