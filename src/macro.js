@@ -9,7 +9,10 @@ The basic AST logic -
 https://astexplorer.net/#/gist/3d66740ae62d8a324881d0ed3b47b803/529c309b805a3017e2103900155b05d9cb72c912
 */
 function flavors({ references, state, babel, config }) {
-    const { default: defaultImport = [] } = references;
+    const {
+        default: defaultImport = [],
+        getFlavor: getFlavorImport = [],
+    } = references;
 
     defaultImport.forEach(referencePath => {
         if (Utils.isNull(referencePath)) {
@@ -75,6 +78,40 @@ function flavors({ references, state, babel, config }) {
 
         // Remove the macro expression
         expPath.remove();
+    })
+
+    // AST-Explorer link -
+    // https://astexplorer.net/#/gist/e9650e09940723b872eae6bef69175ca/7a8aef0401cf2352f25cc1e06bce3f6a9882bc03
+    getFlavorImport.forEach(referencePath => {
+        var refParent = referencePath.parentPath;
+        if (refParent.type !== "CallExpression") {
+            throw new MacroError("getFlavor needs to be a call-expression - eg. getFlavor(\"layout-theme-key\")")
+        }
+
+        var parentArgs = refParent.get("arguments");
+        if (parentArgs.length < 0 || parentArgs.length > 1) {
+            throw new Error("Illegal number of arguments");
+        }
+
+        var argNode = parentArgs[0].node;
+        if (Utils.isNull(argNode)) {
+            throw new MacroError("getFlavorImport requires an argument")
+        }
+
+        if (argNode.type !== "StringLiteral") {
+            throw new MacroError("Argument for getFlavorImport cannot be anything other than a string-literal")
+        }
+
+        var keyVal = argNode.value
+        console.log("Key-val:", keyVal)
+
+        // TODO: Fetch value for key
+        // If key does not exist, replace it with ""
+        var flavorVal = ""
+
+        // Replace the original call 
+        var flavorStrLiteral = babel.types.stringLiteral(flavorVal)
+        refParent.replaceWith(flavorStrLiteral)
     })
 }
 
