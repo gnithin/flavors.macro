@@ -32,6 +32,15 @@ pluginTester({
             import React, { Component } from 'react';
             import Hello from './hello.js';
             `
+        },
+        {
+            code: `
+            import {getFlavor} from '../src/macro.js'
+            var flavor = getFlavor("defaultFlavor");
+            `,
+            output: `
+            var flavor = "";
+            `
         }
     ],
 })
