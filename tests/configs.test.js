@@ -1,4 +1,5 @@
 import Processor from '../src/processor'
+import CONSTANTS from '../src/constants';
 
 const IP_KEY = "ip"
 const CONFIG_KEY = "config"
@@ -123,6 +124,55 @@ it('Config test', () => {
             throw `Expected ${entry[EXPECTED_KEY]}, but got ${importVal} for input - ${entry[IP_KEY]}`
         } else if (isModified !== entry[EXPECTED_MODIFIED_KEY]) {
             throw `Expected is-modified to be ${entry[EXPECTED_MODIFIED_KEY]}, but got ${isModified} for input - ${entry[IP_KEY]}`
+        }
+    })
+});
+
+it('Config test for getFlavorForConfig', () => {
+    const flavorConfig = {
+        "flavorsMap": {
+            "styleFlavor": "green",
+            "layoutFlavor": "red",
+        }
+    }
+
+    // This is so that the empty-string from not matching must not match the 
+    // default-empty-string value for default-flavor. This will make it non-ambiguous.
+    var tempFlavorTheme = "temp"
+    CONSTANTS.DEFAULT_FLAVOR_THEME = tempFlavorTheme
+
+    var ipList = [
+        {
+            [IP_KEY]: "styleFlavor",
+            [EXPECTED_KEY]: "green",
+            [CONFIG_KEY]: flavorConfig,
+        },
+        {
+            [IP_KEY]: "layoutFlavor",
+            [EXPECTED_KEY]: "red",
+            [CONFIG_KEY]: flavorConfig,
+        },
+        {
+            [IP_KEY]: "incorrect-flav",
+            [EXPECTED_KEY]: "",
+            [CONFIG_KEY]: flavorConfig,
+        },
+        {
+            [IP_KEY]: "styleFlavor",
+            [EXPECTED_KEY]: "",
+            [CONFIG_KEY]: null,
+        },
+        {
+            [IP_KEY]: CONSTANTS.DEFAULT_FLAVOR_KEY,
+            [EXPECTED_KEY]: tempFlavorTheme,
+            [CONFIG_KEY]: null,
+        },
+    ]
+
+    ipList.forEach(entry => {
+        var flavorVal = Processor.getFlavorForKey(entry[IP_KEY], entry[CONFIG_KEY])
+        if (flavorVal !== entry[EXPECTED_KEY]) {
+            throw `Expected ${entry[EXPECTED_KEY]}, but got ${flavorVal} for input - ${entry[IP_KEY]}`
         }
     })
 });
