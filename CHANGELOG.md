@@ -1,5 +1,9 @@
 # CHANGE-LOG
 
+## 0.3.0
+- Add `getFlavor` macro
+- Fix the unmet dependency warnings on installing the library
+
 ## 0.2.1
 - Update readme
 - Update description key in package.json
