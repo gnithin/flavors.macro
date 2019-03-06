@@ -105,7 +105,7 @@ function flavors({ references, state, babel, config }) {
         // Fetch value for key
         // If key does not exist, replace it with ""
         var keyVal = argNode.value
-        var flavorVal = Processor.getFlavorForKey(keyVal)
+        var flavorVal = Processor.getFlavorForKey(keyVal, config)
         if (Utils.isNull(flavorVal)) {
             flavorVal = ""
         }
