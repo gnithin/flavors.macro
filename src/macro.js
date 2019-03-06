@@ -102,12 +102,11 @@ function flavors({ references, state, babel, config }) {
             throw new MacroError("Argument for getFlavor cannot be anything other than a string-literal")
         }
 
-        // TODO: Fetch value for key
-        var keyVal = argNode.value
-
+        // Fetch value for key
         // If key does not exist, replace it with ""
-        var flavorVal = ""
-        if (Utils.isEmptyObj(flavorVal)) {
+        var keyVal = argNode.value
+        var flavorVal = Processor.getFlavorForKey(keyVal)
+        if (Utils.isNull(flavorVal)) {
             flavorVal = ""
         }
 
