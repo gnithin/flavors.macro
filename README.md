@@ -20,6 +20,8 @@ $ yarn add flavors.macro
 ```
 
 ## Usage
+
+### Flavors 
 A placholder for a flavor, called a flavor-key, needs to be configured. This key can be used in the import statements in the app. Against this key, flavors can be added.
 
 Add the following into the `.babel-plugin-macrosrc.json` at the root of the project.
@@ -59,6 +61,32 @@ import Bye from './bye.green'
 NOTE: After adding/editing the configuration file(`.babel-plugin-macrosrc.json` or if any of the other equivalents being used), the npm server needs to be manually restarted.
 
 Multiple flavor-keys can be added to the `flavorsMap`. If there are no flavor-keys, then a default key `defaultFlavor` is assumed, which will be replaced by an empty string.
+
+### getFlavor
+If the difference between flavors is really small/subtle or if there is already existing code, in which the flavors need to be created for a small portion of it, creating separate files for all of the different flavors can be cumbersome. 
+
+The `getFlavor()` macro call-expression can be used to fetch the flavor for the corresponding flavor-key.
+
+So for the configuration from the above examples - 
+```js
+import { getFlavor } from 'flavors.macro'
+
+// ... Rest of the code
+var currFlavor = getFlavor("layout-theme")
+switch (currFlavor) {
+    case "green":
+        console.log("Using green flavor")
+        break;
+    case "red":
+        console.log("Using red flavor")
+        break;
+    case "":
+    default:
+        console.log("No such flavor found")
+}
+```
+`getFlavor` will return an empty string if the flavor-key is incorrect. 
+
 
 ## License
 MIT. See license file
