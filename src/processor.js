@@ -64,13 +64,13 @@ export default class Processor {
     }
 
     /**
-     * Returns flavor for key. If key is invalid or not found, returns null
+     * Returns flavor for key. If key is invalid or not found, returns "" (empty-string)
      * @param {string} key 
      * @param {*} config 
      * @returns {string}
      */
     static getFlavorForKey(key, config) {
-        var defaultFlavorVal = null;
+        var defaultFlavorVal = "";
         if (Utils.isEmptyStr(key)) {
             return defaultFlavorVal
         }
