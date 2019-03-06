@@ -1,6 +1,6 @@
 {
     "name": "flavors.macro",
-    "version": "0.2.1",
+    "version": "0.3.0",
     "description": "Macro for building different flavors of a react-app ",
     "keywords": [
         "babel-plugin-macros"
