@@ -90,20 +90,19 @@ function flavors({ references, state, babel, config }) {
 
         var parentArgs = refParent.get("arguments");
         if (parentArgs.length < 0 || parentArgs.length > 1) {
-            throw new Error("Illegal number of arguments");
+            throw new MacroError("getFlavor requires 1 parameter");
         }
 
         var argNode = parentArgs[0].node;
         if (Utils.isNull(argNode)) {
-            throw new MacroError("getFlavorImport requires an argument")
+            throw new MacroError("getFlavor requires an argument")
         }
 
         if (argNode.type !== "StringLiteral") {
-            throw new MacroError("Argument for getFlavorImport cannot be anything other than a string-literal")
+            throw new MacroError("Argument for getFlavor cannot be anything other than a string-literal")
         }
 
         var keyVal = argNode.value
-        console.log("Key-val:", keyVal)
 
         // TODO: Fetch value for key
         // If key does not exist, replace it with ""
