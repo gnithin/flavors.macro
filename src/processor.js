@@ -28,7 +28,7 @@ export default class Processor {
                 continue
             }
 
-            var isDefaultRegex = new RegExp(`^.+\\.${Utils.escapeRegExp(flavorKey)}(?:\\.[^.]+)?$`)
+            var isDefaultRegex = new RegExp(`^.+[./]${Utils.escapeRegExp(flavorKey)}(?:[./].+)?$`)
             if (true === isDefaultRegex.test(importVal)) {
                 isMatched = true;
                 matchedKey = flavorKey
@@ -42,17 +42,7 @@ export default class Processor {
             return resp;
         }
 
-        /*
-            NOTE: If replacement is an empty string, then don't add the additional period.
-            For example -
-            <replacement-val> => <replaced-string>
-            "green" => abc.green.js
-            "" => abc.js
-        */
-        if (replacementVal !== "") {
-            replacementVal = `.${replacementVal}`
-        }
-        var defaultReplaceRegex = new RegExp(`\\.${Utils.escapeRegExp(matchedKey)}\\b`)
+        var defaultReplaceRegex = new RegExp(`${Utils.escapeRegExp(matchedKey)}\\b`)
         importVal = importVal.replace(defaultReplaceRegex, `${replacementVal}`);
 
 
