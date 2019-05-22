@@ -2,3 +2,5 @@
 __snapshots__
 .DS_Store
 /lib
+.idea
+yarn.lock
