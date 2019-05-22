@@ -116,6 +116,12 @@ it('Config test', () => {
             },
             [EXPECTED_MODIFIED_KEY]: false,
         },
+        {
+            [IP_KEY]: "abc/styleFlavor/theme.js",
+            [EXPECTED_KEY]: "abc/green/theme.js",
+            [CONFIG_KEY]: flavorConfig,
+            [EXPECTED_MODIFIED_KEY]: true,
+        },
     ]
 
     ipList.forEach(entry => {

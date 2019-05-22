@@ -23,16 +23,18 @@ export default class Processor {
         var isMatched = false;
         var replacementVal = null;
         var matchedKey = null;
+        let matchedPathChar = null;
         for (var flavorKey in flavorMap) {
             if (false === flavorMap.hasOwnProperty(flavorKey)) {
                 continue
             }
 
-            var isDefaultRegex = new RegExp(`^.+[./]${Utils.escapeRegExp(flavorKey)}(?:[./].+)?$`)
+            var isDefaultRegex = new RegExp(`^.+([./])${Utils.escapeRegExp(flavorKey)}(?:([./]).+)?$`)
             if (true === isDefaultRegex.test(importVal)) {
                 isMatched = true;
                 matchedKey = flavorKey
                 replacementVal = flavorMap[matchedKey]
+                matchedPathChar = importVal.match(isDefaultRegex)[1]
                 break;
             }
         }
@@ -42,7 +44,17 @@ export default class Processor {
             return resp;
         }
 
-        var defaultReplaceRegex = new RegExp(`${Utils.escapeRegExp(matchedKey)}\\b`)
+        /*
+            NOTE: If replacement is an empty string, then don't add the additional period.
+            For example -
+            <replacement-val> => <replaced-string>
+            "green" => abc.green.js
+            "" => abc.js
+        */
+        if (replacementVal !== "") {
+            replacementVal = `${matchedPathChar}${replacementVal}`
+        }
+        var defaultReplaceRegex = new RegExp(`[./]${Utils.escapeRegExp(matchedKey)}\\b`)
         importVal = importVal.replace(defaultReplaceRegex, `${replacementVal}`);
 
 
