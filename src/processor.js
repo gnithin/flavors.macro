@@ -27,7 +27,7 @@ export default class Processor {
         var isMatched = false;
         var replacementVal = null;
         var matchedKey = null;
-        let matchedPathChar = null;
+        var matchedPathChar = null;
         for (var flavorKey in flavorMap) {
             if (false === flavorMap.hasOwnProperty(flavorKey)) {
                 continue
