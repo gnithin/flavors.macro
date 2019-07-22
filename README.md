@@ -97,6 +97,11 @@ switch (currFlavor) {
 ```
 `getFlavor` will return an empty string if the flavor-key is incorrect. 
 
+## Building and running locally
+- All the source-code is inside the `src` directory. 
+- Ideally any change that's made needs to have a test. Running the tests - `npm test`.
+- Whenever testing out in the example-app, make sure to run `npm run-script build` in the project-root, since it'll be picking up from the local-env. NOTE: `lib` dir is git-ignored, so you'll not be able to see any-change tracked by git.
+- Deploy to npm using  - `npm publish`
 
 ## License
 MIT. See license file
