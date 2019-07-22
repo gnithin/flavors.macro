@@ -16,6 +16,10 @@ export default class Processor {
             importVal: importVal,
         }
 
+        if (Utils.isNull(importVal)) {
+            return resp
+        }
+
         // Fetch the flavor-map
         var flavorMap = Processor.getFlavorMapForConfig(config)
 
@@ -23,16 +27,20 @@ export default class Processor {
         var isMatched = false;
         var replacementVal = null;
         var matchedKey = null;
+        var matchedPathChar = null;
+
         for (var flavorKey in flavorMap) {
             if (false === flavorMap.hasOwnProperty(flavorKey)) {
                 continue
             }
 
-            var isDefaultRegex = new RegExp(`^.+\\.${Utils.escapeRegExp(flavorKey)}(?:\\.[^.]+)?$`)
-            if (true === isDefaultRegex.test(importVal)) {
+            var isDefaultRegex = new RegExp(`^.+([./])${Utils.escapeRegExp(flavorKey)}(?:[./].+)?$`)
+            var regexResults = importVal.match(isDefaultRegex)
+            if (false === Utils.isNull(regexResults) && regexResults.length >= 2) {
                 isMatched = true;
                 matchedKey = flavorKey
                 replacementVal = flavorMap[matchedKey]
+                matchedPathChar = regexResults[1]
                 break;
             }
         }
@@ -50,9 +58,9 @@ export default class Processor {
             "" => abc.js
         */
         if (replacementVal !== "") {
-            replacementVal = `.${replacementVal}`
+            replacementVal = `${matchedPathChar}${replacementVal}`
         }
-        var defaultReplaceRegex = new RegExp(`\\.${Utils.escapeRegExp(matchedKey)}\\b`)
+        var defaultReplaceRegex = new RegExp(`[./]${Utils.escapeRegExp(matchedKey)}\\b`)
         importVal = importVal.replace(defaultReplaceRegex, `${replacementVal}`);
 
 

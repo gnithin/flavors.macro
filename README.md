@@ -40,21 +40,31 @@ Here the the flavors-key is `layout-theme`. The current flavor being `green`.
 
 If, for some reason, you cannot include the `.babel-plugin-macrosrc.json` file to your project, you can use any of the methods mentioned [here](https://github.com/kentcdodds/babel-plugin-macros/blob/master/other/docs/author.md#config-experimental).
 
-You can then use the flavor-key in any class by adding the macro-key as the last element, in the name of the import string or just before the extension. Also make sure to call the `flavor()` function. In the below example, the flavor-key `layout-theme`, configured above, is being used - 
+You can then use the flavor-key in any class by adding the macro-key as the last element, in the name of the import string or just before the extension. You can use flavors in the directory-level as well. Just make sure to call the `flavor()` function, after all the import statements.
+
+In the below example, the flavor-key `layout-theme`, configured above, is being used - 
 ```js
+// Import flavors on top
 import flavors from 'flavors.macro'
+
 import Hello from './hello.layout-theme.js'
 import Bye from './bye.layout-theme'
+import Constants from './constants.layout-theme/theme'
+import Config from './layout-theme.config/config'
+import Theme from './layout-theme/theme'
 // ... other imports
 
-// Add this right after all the imports are declared
+// Add this right after all the imports are declared (won't work otherwise)
 flavors();
 ```
-When the application is built, the above class will evaluate to -
+When the application is built, the above statements will evaluate to -
 
 ```js
 import Hello from './hello.green.js'
 import Bye from './bye.green'
+import Constants from './constants.green/theme'
+import Config from './green.config/config'
+import Theme from './green/theme'
 // ... other imports
 ```
 
@@ -87,6 +97,11 @@ switch (currFlavor) {
 ```
 `getFlavor` will return an empty string if the flavor-key is incorrect. 
 
+## Building and running locally
+- All the source-code is inside the `src` directory. 
+- Ideally any change that's made needs to have a test. Running the tests - `npm test`.
+- Whenever testing out in the example-app, make sure to run `npm run-script build` in the project-root, since it'll be picking up from the local-env. NOTE: `lib` dir is git-ignored, so you'll not be able to see any-change tracked by git.
+- Deploy to npm using  - `npm publish`
 
 ## License
 MIT. See license file
