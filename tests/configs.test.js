@@ -116,9 +116,23 @@ it('Config test', () => {
             },
             [EXPECTED_MODIFIED_KEY]: false,
         },
+        // Directory flavors
         {
             [IP_KEY]: "abc/styleFlavor/theme.js",
             [EXPECTED_KEY]: "abc/green/theme.js",
+            [CONFIG_KEY]: flavorConfig,
+            [EXPECTED_MODIFIED_KEY]: true,
+        },
+        {
+            [IP_KEY]: "abc/constants.layoutFlavor/theme.js",
+            [EXPECTED_KEY]: "abc/constants.red/theme.js",
+            [CONFIG_KEY]: flavorConfig,
+            [EXPECTED_MODIFIED_KEY]: true,
+        },
+        // The reversed-flavors should also work
+        {
+            [IP_KEY]: "abc/layoutFlavor.constants/theme.js",
+            [EXPECTED_KEY]: "abc/red.constants/theme.js",
             [CONFIG_KEY]: flavorConfig,
             [EXPECTED_MODIFIED_KEY]: true,
         },
