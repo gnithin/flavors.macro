@@ -1,5 +1,9 @@
 # CHANGE-LOG
 
+## 0.4.0
+- Add support for directory-level flavors
+- Fix all the security warnings on libraries
+
 ## 0.3.0
 - Add `getFlavor` macro
 - Fix the unmet dependency warnings on installing the library
