@@ -16,6 +16,10 @@ export default class Processor {
             importVal: importVal,
         }
 
+        if (Utils.isNull(importVal)) {
+            return resp
+        }
+
         // Fetch the flavor-map
         var flavorMap = Processor.getFlavorMapForConfig(config)
 
