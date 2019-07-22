@@ -28,17 +28,19 @@ export default class Processor {
         var replacementVal = null;
         var matchedKey = null;
         var matchedPathChar = null;
+
         for (var flavorKey in flavorMap) {
             if (false === flavorMap.hasOwnProperty(flavorKey)) {
                 continue
             }
 
-            var isDefaultRegex = new RegExp(`^.+([./])${Utils.escapeRegExp(flavorKey)}(?:([./]).+)?$`)
-            if (true === isDefaultRegex.test(importVal)) {
+            var isDefaultRegex = new RegExp(`^.+([./])${Utils.escapeRegExp(flavorKey)}(?:[./].+)?$`)
+            var regexResults = importVal.match(isDefaultRegex)
+            if (false === Utils.isNull(regexResults) && regexResults.length >= 2) {
                 isMatched = true;
                 matchedKey = flavorKey
                 replacementVal = flavorMap[matchedKey]
-                matchedPathChar = importVal.match(isDefaultRegex)[1]
+                matchedPathChar = regexResults[1]
                 break;
             }
         }
